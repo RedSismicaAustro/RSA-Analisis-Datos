@@ -1,3 +1,4 @@
-# Dependencias base para análisis de acelerógrafos
-tensorflow==2.12
-obspy
+# Las dependencias científicas base (obspy, tensorflow) se instalan directamente
+# desde conda-forge mediante 'environment.yml' para evitar compilar binarios C++ localmente.
+#
+# Agrega aquí paquetes ligeros exclusivos de pip si es necesario.

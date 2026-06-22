@@ -6,11 +6,13 @@ Este repositorio está estructurado para soportar múltiples proyectos y entorno
 
 ---
 
-## 📂 Estructura de Entornos (`envs/`)
+## 📂 Estructura del Repositorio
 
-Los entornos virtuales se encuentran organizados por temática en el directorio `envs/`:
-*   `envs/acelerografo/`: Entorno para el análisis y procesamiento de señales sísmicas/acelerográficas.
-*   *(Próximamente)* `envs/coordinometro/`: Entorno para visión artificial y tracking en coordinómetros.
+*   **`bin/`**: Contiene scripts de lote (`.bat`) para el lanzamiento rápido de aplicaciones en Windows 11.
+*   **`envs/`**: Aloja las recetas de entornos virtuales de Conda/Micromamba organizadas por proyecto:
+    *   `envs/acelerografo/`: Entorno para el análisis y procesamiento de señales de acelerógrafos.
+*   **`src/`**: Código fuente de los proyectos de análisis:
+    *   `src/acelerografos/`: Scripts y módulos de análisis para acelerógrafos.
 
 ---
 
@@ -21,14 +23,14 @@ Debido a las restricciones de red y políticas de grupo (GPO) corporativas en Wi
 ### Proyecto: Acelerógrafo (Señales Sísmicas)
 
 #### Paso 1: Creación del Entorno
-Desde una terminal **CMD**, ejecuta el siguiente comando apuntando a la configuración específica del proyecto:
+Si no tienes el entorno creado, puedes construirlo desde una terminal **CMD** apuntando a la configuración del proyecto:
 
 ```cmd
 C:\Users\miltonrsa\micromamba.exe env create -f envs/acelerografo/environment.yml
 ```
 
 #### Paso 2: Instalación de Dependencias
-Una vez creado el entorno, instala los paquetes definidos en su archivo de dependencias de pip:
+Instala los paquetes definidos en su archivo de dependencias de pip:
 
 ```cmd
 C:\Users\miltonrsa\micromamba.exe run -n rsa_acelerografo pip install -r envs/acelerografo/requirements.txt
@@ -36,11 +38,19 @@ C:\Users\miltonrsa\micromamba.exe run -n rsa_acelerografo pip install -r envs/ac
 
 ---
 
-## 🚀 Ejecución de la GUI en Windows 11
+## 🚀 Ejecución de Aplicaciones en Windows 11
 
-Dependiendo del nivel de restricciones aplicadas en tu terminal, tienes tres métodos para activar el entorno y ejecutar la interfaz gráfica (`src/gui/main.py`):
+Dependiendo del nivel de restricciones aplicadas en tu terminal, tienes tres métodos para activar el entorno y ejecutar los análisis (ej. `src/acelerografos/main.py`):
 
-### Método 1: Activación Estándar (Recomendado en CMD)
+### Método 1: Lanzador de Inicio Rápido (Recomendado)
+Puedes ejecutar directamente la aplicación haciendo doble clic sobre el script de lote en el Explorador de Archivos o ejecutándolo desde consola:
+
+```cmd
+bin\run_acelerografo.bat
+```
+*(Este script cambia automáticamente el directorio de trabajo a la raíz del repositorio y levanta el entorno de forma aislada utilizando `rsa_acelerografo`).*
+
+### Método 2: Activación Estándar (CMD)
 Si inicializaste Micromamba correctamente para CMD, ejecuta:
 
 ```cmd
@@ -48,25 +58,14 @@ Si inicializaste Micromamba correctamente para CMD, ejecuta:
 micromamba activate rsa_acelerografo
 
 :: 2. Lanzar la aplicación
-python src/gui/main.py
+python src/acelerografos/main.py
 ```
 
-### Método 2: Ejecución Directa de Respaldo (`micromamba run`)
+### Método 3: Ejecución Directa de Respaldo (`micromamba run`)
 Si la activación del entorno falla o está bloqueada por políticas del shell padre, utiliza el mecanismo de ejecución directa:
 
 ```cmd
-C:\Users\miltonrsa\micromamba.exe run -n rsa_acelerografo python src/gui/main.py
-```
-
-### Método 3: Script de Lote de Inicio Rápido (`run_gui.bat`)
-Para un acceso directo de doble clic, puedes crear un archivo llamado `run_gui.bat` en la raíz del repositorio con el siguiente contenido:
-
-```batch
-@echo off
-title Ejecutar GUI - RSA Analisis Datos
-echo Activando entorno virtual 'rsa_acelerografo' y ejecutando la GUI...
-call C:\Users\miltonrsa\micromamba.exe run -n rsa_acelerografo python src/gui/main.py
-pause
+C:\Users\miltonrsa\micromamba.exe run -n rsa_acelerografo python src/acelerografos/main.py
 ```
 
 ---
