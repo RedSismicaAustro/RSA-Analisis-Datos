@@ -1,0 +1,3 @@
+# Dependencias base para análisis de acelerógrafos
+tensorflow==2.12
+obspy
